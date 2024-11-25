@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Menu</title>
+    <script>
+        // Function to fetch and display menu data in the table
+        const loadMenu = async () => {
+            const response = await fetch('/menu/list'); // Fetch data from the list method
+            const menuItems = await response.json(); // Parse JSON response
+
+            // Select table body
+            const tableBody = document.querySelector('#menuTable tbody');
+            tableBody.innerHTML = ''; // Clear existing rows
+
+            // Loop through menu items and append rows
+            menuItems.forEach(item => {
+                const row = `
+                    <tr>
+                        <td>${item.Id}</td>
+                        <td>${item.Name}</td>
+                        <td>${item.Type}</td>
+                        <td>${item.Price}</td>
+                        <td><img src="${item.Image}" alt="${item.Name}" width="50"></td>
+                    </tr>
+                `;
+                tableBody.innerHTML += row;
+            });
+        };
+
+        // Load menu data when the page loads
+        window.onload = loadMenu;
+    </script>
+</head>
+<body>
+    <h2>Menu</h2>
+
+    <!-- Table to display menu items -->
+    <table border="1" id="menuTable">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Name</th>
+                <th>Type</th>
+                <th>Price</th>
+                <th>Image</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Rows will be added dynamically via JavaScript -->
+        </tbody>
+    </table>
+</body>
+</html>
